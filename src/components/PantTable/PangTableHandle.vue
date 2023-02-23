@@ -184,6 +184,7 @@ export default {
     },
     handleSearch() {
       this.$emit("search", this.searchVal);
+      this.searchVal = "";
     },
   },
   render() {

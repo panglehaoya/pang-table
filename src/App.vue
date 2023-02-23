@@ -5,30 +5,32 @@
       :columns="columns"
       :showButtons="showButtons"
       :loading="loading"
-      :tablePage="tablePage"
+      :currentPage.sync="tablePage.current"
+      :pageSize.sync="tablePage.size"
+      :total="tablePage.total"
       @refresh="handleRefresh"
       @search="handleSearch"
       @currentChange="handleCurrentChange"
       @sizeChange="handleSizeChange"
+      @formQuery="handleFormQuery"
+      @formReset="handleFormReset"
     >
-      <template v-slot:form>
-        <div class="form-container">
-          <el-form ref="form" label-width="120px" :model="formModel">
-            <el-form-item label="日期">
-              <el-date-picker
-                type="date"
-                placeholder="选择日期"
-                v-model="formModel.date"
-              />
-            </el-form-item>
-            <el-form-item label="姓名">
-              <el-input v-model="formModel.name"></el-input>
-            </el-form-item>
-          </el-form>
-          <el-button type="primary">查询</el-button>
-          <el-button type="plain">重置</el-button>
-        </div>
-      </template>
+      <!--      <template v-slot:form>-->
+      <!--        <div class="form-container">-->
+      <!--          <el-form ref="form" label-width="120px" :model="formModel">-->
+      <!--            <el-form-item label="日期">-->
+      <!--              <el-date-picker-->
+      <!--                type="date"-->
+      <!--                placeholder="选择日期"-->
+      <!--                v-model="formModel.date"-->
+      <!--              />-->
+      <!--            </el-form-item>-->
+      <!--            <el-form-item label="姓名">-->
+      <!--              <el-input v-model="formModel.name"></el-input>-->
+      <!--            </el-form-item>-->
+      <!--          </el-form>-->
+      <!--        </div>-->
+      <!--      </template>-->
       <template v-slot:button="scoped">
         <el-button type="danger" @click="handleDelete(scoped)">
           自定义删除
@@ -139,17 +141,23 @@ export default {
     handleUpdate(e, row) {
       console.log("update row", row);
     },
-    handleRefresh() {
-      console.log("refresh");
+    handleRefresh(val) {
+      console.log("refresh", val);
     },
     handleSearch(val) {
       console.log("search", val);
     },
-    handleCurrentChange(val) {
-      this.tablePage.current = val;
+    handleCurrentChange() {
+      console.log(this.tablePage.current);
     },
-    handleSizeChange(val) {
-      this.tablePage.size = val;
+    handleSizeChange() {
+      console.log(this.tablePage.size);
+    },
+    handleFormQuery(val) {
+      console.log(val);
+    },
+    handleFormReset() {
+      console.log("form reset");
     },
   },
 };

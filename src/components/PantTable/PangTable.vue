@@ -1,4 +1,5 @@
 <script>
+import PangTableForm from "@/components/PantTable/PangTableForm";
 import PangTableHandle from "./PangTableHandle.vue";
 import printJS from "print-js";
 
@@ -41,15 +42,27 @@ export default {
       },
     },
     loading: { type: Boolean, default: false },
-    tablePage: {
-      type: Object,
-      default() {
-        return {
-          current: 1,
-          size: 10,
-          total: 0,
-        };
-      },
+    // tablePage: {
+    //   type: Object,
+    //   default() {
+    //     return {
+    //       current: 1,
+    //       size: 10,
+    //       total: 0,
+    //     };
+    //   },
+    // },
+    currentPage: {
+      type: Number,
+      default: 1,
+    },
+    pageSize: {
+      type: Number,
+      default: 10,
+    },
+    total: {
+      type: Number,
+      default: 0,
     },
   },
   data() {
@@ -60,6 +73,16 @@ export default {
       tableRadio: "",
       tableSelected: [],
     };
+  },
+  computed: {
+    formColumns() {
+      return this.tableColumns.slice(0, 3);
+    },
+    comCurrentPage: {
+      get() {
+        return this.tablePage.current;
+      },
+    },
   },
   watch: {
     data: {
@@ -110,13 +133,30 @@ export default {
       this.tableSelected = [{ ...val }];
       this.$emit("current-change", this.tableSelected);
     },
-    handlePageSizeChange(val) {
-      this.$emit("sizeChange", val);
+    handlePageSizeChange() {
+      this.$emit("sizeChange");
     },
-    handlePageCurrentChange(val) {
-      this.$emit("currentChange", val);
+    handlePageCurrentChange() {
+      this.$emit("currentChange");
+    },
+    updatePageSize(val) {
+      this.$emit("update:pageSize", val);
+    },
+    updateCurrentPage(val) {
+      this.$emit("update:currentPage", val);
     },
     // render
+    renderForm() {
+      const formCustom = this.$slots.form ? this.$slots.form[0] : null;
+      return (
+        <PangTableForm
+          formColumns={this.formColumns}
+          formCustom={formCustom}
+          onFormQuery={(val) => this.$emit("formQuery", val)}
+          onFormReset={() => this.$emit("formReset")}
+        />
+      );
+    },
     renderCheck() {
       if (this.choice === "single") {
         return (
@@ -141,6 +181,7 @@ export default {
         prop: item.prop,
         label: item.label,
       }));
+
       const customButton = this.$scopedSlots.button
         ? this.$scopedSlots.button(this.tableSelected)[0]
         : null;
@@ -153,29 +194,46 @@ export default {
           customButton={customButton}
           onChange={this.handleColumnChange}
           onPrint={this.handlePrint}
-          onRefresh={() => this.$emit("refresh")}
-          onSearch={(val) => this.$emit("search", val)}
+          onRefresh={() =>
+            this.$emit("refresh", {
+              currentPage: this.currentPage,
+              pageSize: this.pageSize,
+            })
+          }
+          onSearch={(val) =>
+            this.$emit("search", {
+              searchVal: val,
+              pagination: {
+                currentPage: this.currentPage,
+                pageSize: this.pageSize,
+              },
+            })
+          }
         />
       );
     },
     renderPagination() {
       return (
-        <el-pagination
-          page-sizes={[10, 20, 30, 50]}
-          layout="total, sizes, prev, pager, next, jumper"
-          page-size={this.tablePage.size}
-          total={this.tablePage.total}
-          current-page={this.tablePage.current}
-          on-size-change={this.handlePageSizeChange}
-          on-current-change={this.handlePageCurrentChange}
-        />
+        <div class="pang-table__pagination">
+          <el-pagination
+            page-sizes={[10, 20, 30, 50]}
+            layout="total, sizes, prev, pager, next, jumper"
+            total={this.total}
+            page-size={this.pageSize}
+            current-page={this.currentPage}
+            on={{ ["update:currentPage"]: this.updateCurrentPage }}
+            on={{ ["update:pageSize"]: this.updatePageSize }}
+            on-size-change={this.handlePageSizeChange}
+            on-current-change={this.handlePageCurrentChange}
+          />
+        </div>
       );
     },
   },
   render(h) {
     return (
       <div class="pang-table" v-loading={this.loading}>
-        {this.isRenderSearch()}
+        {this.renderForm()}
         {this.renderHandle()}
         <div class="pang-table-container" id="printTable">
           <el-table
@@ -221,6 +279,10 @@ export default {
 <style lang="scss">
 .pang-table-search {
   width: 100%;
+}
+
+.pang-table__pagination {
+  margin-top: 20px;
 }
 
 .el-radio__label {
