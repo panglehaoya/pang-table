@@ -105,17 +105,17 @@ export default {
     },
     handleSelectionChange(val) {
       this.tableSelected = [...val];
-      this.$emit("select-change", val);
+      this.$emit("selectChange", val);
     },
     handleCurrentChange(val) {
       this.tableSelected = [{ ...val }];
-      this.$emit("current-change", this.tableSelected);
+      this.$emit("currentChange", this.tableSelected);
     },
     handlePageSizeChange() {
       this.$emit("sizeChange");
     },
     handlePageCurrentChange() {
-      this.$emit("currentChange");
+      this.$emit("currentPageChange");
     },
     updatePageSize(val) {
       this.$emit("update:pageSize", val);

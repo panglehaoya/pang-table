@@ -11,7 +11,9 @@
       @refresh="handleRefresh"
       @search="handleSearch"
       @currentChange="handleCurrentChange"
+      @selectChange="handleSelectChange"
       @sizeChange="handleSizeChange"
+      @currentPageChange="handleCurrentPageChange"
       @formQuery="handleFormQuery"
       @formReset="handleFormReset"
     >
@@ -178,8 +180,9 @@ export default {
     handleSearch(val) {
       console.log("search", val);
     },
-    handleCurrentChange() {
-      console.log(this.tablePage.current);
+    handleCurrentChange(val) {
+      console.log(val);
+      // console.log(this.tablePage.current);
     },
     handleSizeChange() {
       console.log(this.tablePage.size);
@@ -189,6 +192,12 @@ export default {
     },
     handleFormReset() {
       console.log("form reset");
+    },
+    handleCurrentPageChange() {
+      console.log(this.tablePage.current);
+    },
+    handleSelectChange(val) {
+      console.log(val);
     },
   },
 };
