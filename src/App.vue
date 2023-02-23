@@ -105,7 +105,9 @@ export default {
       },
       {
         prop: "address",
-        label: "地址",
+        label: function (h, row) {
+          return <el-input placeholder="自定义表头" />;
+        },
       },
       {
         label: "操作",

@@ -17,14 +17,7 @@ export default {
     columns: {
       type: Array,
       default: function () {
-        return [
-          {
-            prop: "",
-            label: "",
-            width: "",
-            renderFn: null,
-          },
-        ];
+        return [];
       },
     },
     choice: {
@@ -42,16 +35,6 @@ export default {
       },
     },
     loading: { type: Boolean, default: false },
-    // tablePage: {
-    //   type: Object,
-    //   default() {
-    //     return {
-    //       current: 1,
-    //       size: 10,
-    //       total: 0,
-    //     };
-    //   },
-    // },
     currentPage: {
       type: Number,
       default: 1,
@@ -76,12 +59,7 @@ export default {
   },
   computed: {
     formColumns() {
-      return this.tableColumns.slice(0, 3);
-    },
-    comCurrentPage: {
-      get() {
-        return this.tablePage.current;
-      },
+      return this.tableColumns.slice(0, 2);
     },
   },
   watch: {
@@ -229,6 +207,14 @@ export default {
         </div>
       );
     },
+    renderHeader(itemLabel, h, row) {
+      console.log(itemLabel);
+      if (typeof itemLabel === "function") {
+        return itemLabel(h, row);
+      } else if (typeof itemLabel === "string") {
+        return itemLabel;
+      }
+    },
   },
   render(h) {
     return (
@@ -249,19 +235,19 @@ export default {
               const tableColumn = item.renderFn ? (
                 <el-table-column
                   prop={item.prop}
-                  label={item.label}
                   width={item.width}
                   scopedSlots={{
-                    default: ({ row }) => {
-                      return item.renderFn(h, row);
-                    },
+                    default: ({ row }) => item.renderFn(h, row),
+                    header: ({ row }) => this.renderHeader(item.label, h, row),
                   }}
                 />
               ) : (
                 <el-table-column
                   prop={item.prop}
-                  label={item.label}
                   width={item.width}
+                  scopedSlots={{
+                    header: ({ row }) => this.renderHeader(item.label, h, row),
+                  }}
                 />
               );
 
