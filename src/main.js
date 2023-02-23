@@ -13,6 +13,7 @@ import {
   Radio,
   DatePicker,
   Pagination,
+  Switch,
   Loading,
 } from "element-ui";
 
@@ -29,6 +30,7 @@ Vue.use(CheckboxGroup);
 Vue.use(Radio);
 Vue.use(DatePicker);
 Vue.use(Pagination);
+Vue.use(Switch);
 Vue.use(Loading);
 
 new Vue({

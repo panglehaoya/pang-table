@@ -208,7 +208,6 @@ export default {
       );
     },
     renderHeader(itemLabel, h, row) {
-      console.log(itemLabel);
       if (typeof itemLabel === "function") {
         return itemLabel(h, row);
       } else if (typeof itemLabel === "string") {

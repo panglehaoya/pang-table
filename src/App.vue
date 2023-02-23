@@ -54,24 +54,28 @@ export default {
           date: "2023-01-01",
           name: "Pang1",
           address: "北京",
+          auth: true,
         },
         {
           id: 2,
           date: "2023-01-02",
           name: "Pang2",
           address: "上海",
+          auth: false,
         },
         {
           id: 3,
           date: "2023-01-03",
           name: "Pang3",
           address: "广州",
+          auth: true,
         },
         {
           id: 4,
           date: "2023-01-04",
           name: "Pang4",
           address: "深圳",
+          auth: false,
         },
       ],
       columns: [],
@@ -104,6 +108,23 @@ export default {
         width: "180",
       },
       {
+        prop: "auth",
+        label: "授权",
+        width: "180",
+        renderFn: function (h, row) {
+          return (
+            <el-switch
+              value={row.auth}
+              onInput={() => _this.handleAuthChange(row)}
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+              active-text="授权"
+              inactive-text="未授权"
+            />
+          );
+        },
+      },
+      {
         prop: "address",
         label: function (h, row) {
           return <el-input placeholder="自定义表头" />;
@@ -134,6 +155,14 @@ export default {
     ];
   },
   methods: {
+    handleAuthChange(val) {
+      const temp = [...this.tableData];
+      const findIndex = temp.findIndex((item) => item.id === val.id);
+      const obj = temp[findIndex];
+      temp[findIndex] = { ...obj, auth: !val.auth };
+
+      this.tableData = [...temp];
+    },
     handleDelete(scoped) {
       console.log("scoped", scoped);
     },
