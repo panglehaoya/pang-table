@@ -17,22 +17,6 @@
       @formQuery="handleFormQuery"
       @formReset="handleFormReset"
     >
-      <!--      <template v-slot:form>-->
-      <!--        <div class="form-container">-->
-      <!--          <el-form ref="form" label-width="120px" :model="formModel">-->
-      <!--            <el-form-item label="日期">-->
-      <!--              <el-date-picker-->
-      <!--                type="date"-->
-      <!--                placeholder="选择日期"-->
-      <!--                v-model="formModel.date"-->
-      <!--              />-->
-      <!--            </el-form-item>-->
-      <!--            <el-form-item label="姓名">-->
-      <!--              <el-input v-model="formModel.name"></el-input>-->
-      <!--            </el-form-item>-->
-      <!--          </el-form>-->
-      <!--        </div>-->
-      <!--      </template>-->
       <template v-slot:button="scoped">
         <el-button type="danger" @click="handleDelete(scoped)">
           自定义删除
