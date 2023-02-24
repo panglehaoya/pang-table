@@ -36,3 +36,4 @@ Vue.use(Loading);
 new Vue({
   render: (h) => h(App),
 }).$mount("#app");
+console.log("main");
