@@ -130,7 +130,12 @@ export default {
         <PangTableForm
           formColumns={this.formColumns}
           formCustom={formCustom}
-          onFormQuery={(val) => this.$emit("formQuery", val)}
+          onFormQuery={(val) =>
+            this.$emit("formQuery", {
+              query: val,
+              page: { currentPage: this.currentPage, size: this.pageSize },
+            })
+          }
           onFormReset={() => this.$emit("formReset")}
         />
       );

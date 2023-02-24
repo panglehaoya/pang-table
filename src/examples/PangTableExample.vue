@@ -17,7 +17,7 @@
       @formQuery="handleFormQuery"
       @formReset="handleFormReset"
     >
-      <template v-slot:button="scoped">
+      <template v-slot:form="scoped">
         <el-button type="danger" @click="handleDelete(scoped)">
           自定义删除
         </el-button>

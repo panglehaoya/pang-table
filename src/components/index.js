@@ -1,3 +1,3 @@
 import PangTable from "./PantTable/PangTable.vue";
 
-export { PangTable };
+export default PangTable;
