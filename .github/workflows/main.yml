@@ -27,7 +27,9 @@ jobs:
         run: npm install # 安装依赖
 
       - name: Build
-        run: npm run lib # 打包
+        run: |
+          git config --global core.safecrlf true
+          npm run lib # 打包
 
       - name: Publish to NPM  # 推送到 NPM 上
         run: |
