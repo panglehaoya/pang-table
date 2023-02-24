@@ -26,12 +26,6 @@ jobs:
       - name: Install
         run: npm install # 安装依赖
 
-      - name: Build
-        run: |
-          git config --global core.autocrlf input
-          git config --global core.safecrlf true
-          npm run lib # 打包
-
       - name: Publish to NPM  # 推送到 NPM 上
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
