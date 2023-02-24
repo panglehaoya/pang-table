@@ -1,9 +1,9 @@
 {
-  "name": "pang-ui",
-  "version": "1.0.0",
-  "description": "二次封装element-ui",
+  "name": "pang-table",
+  "version": "1.0.8",
+  "description": "二次封装el-table",
   "author": "panglehaoya",
-  "main": "dist/pang-ui.umd.min.js",
+  "main": "dist/pang-table.umd.min.js",
   "files": [
     "dist"
   ],
@@ -16,10 +16,10 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name pang-ui ./src/components/index.js",
+    "lint:fix": "vue-cli-service line --fix",
+    "lib": "vue-cli-service build --target lib --name pang-table ./src/components/index.js",
     "prepare": "husky install",
-    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
-    "lint:pretty": "pretty-quick --staged"
+    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js"
   },
   "dependencies": {
     "core-js": "^3.8.3",
