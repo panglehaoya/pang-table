@@ -24,7 +24,6 @@
         </el-button>
       </template>
     </PangTable>
-    <input type="text" v-model="watermarkConfig.text" />
   </div>
 </template>
 
@@ -89,7 +88,7 @@ export default {
         rotate: 30,
         allowDelete: false,
         offsetX: 300,
-        offsetY: 300,
+        offsetY: 200,
       },
     };
   },

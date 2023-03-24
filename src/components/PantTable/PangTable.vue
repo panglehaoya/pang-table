@@ -60,7 +60,7 @@ export default {
           rotate: 30,
           allowDelete: false,
           offsetX: 300,
-          offsetY: 300,
+          offsetY: 100,
         };
       },
     },
@@ -108,7 +108,7 @@ export default {
     setWatermark() {
       if (!this.watermarkConfig.showMark) return;
       this.$nextTick(() => {
-        const watermark = new WaterMark(".pang-table");
+        const watermark = new WaterMark("#printTable");
         watermark.setWaterMark({ ...this.watermarkConfig });
       });
     },
@@ -293,6 +293,10 @@ export default {
 </script>
 
 <style lang="scss">
+.pang-table-container {
+  position: relative;
+}
+
 .pang-table-search {
   width: 100%;
 }
