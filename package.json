@@ -1,6 +1,6 @@
 {
   "name": "pang-table",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "二次封装el-table",
   "author": "panglehaoya",
   "main": "dist/pang-table.umd.min.js",
