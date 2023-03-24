@@ -8,6 +8,7 @@
       :currentPage.sync="tablePage.current"
       :pageSize.sync="tablePage.size"
       :total="tablePage.total"
+      :watermark-config="watermarkConfig"
       @refresh="handleRefresh"
       @search="handleSearch"
       @currentChange="handleCurrentChange"
@@ -23,6 +24,7 @@
         </el-button>
       </template>
     </PangTable>
+    <input type="text" v-model="watermarkConfig.text" />
   </div>
 </template>
 
@@ -78,9 +80,21 @@ export default {
       },
       loading: false,
       tablePage: { current: 1, size: 10, total: 20 },
+      watermarkConfig: {
+        showMark: true,
+        text: "pang-table",
+        fontSize: 18,
+        fontColor: "black",
+        fontFamily: "Microsoft Yahei",
+        rotate: 30,
+        allowDelete: false,
+        offsetX: 300,
+        offsetY: 300,
+      },
     };
   },
   mounted() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const _this = this;
     this.columns = [
       {

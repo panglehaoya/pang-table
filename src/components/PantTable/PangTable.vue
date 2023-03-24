@@ -1,7 +1,8 @@
 <script>
+import { WaterMark } from "@/utils/watermark";
+import printJS from "print-js";
 import PangTableForm from "@/components/PantTable/PangTableForm";
 import PangTableHandle from "./PangTableHandle.vue";
-import printJS from "print-js";
 
 export default {
   name: "PangTable",
@@ -47,6 +48,22 @@ export default {
       type: Number,
       default: 0,
     },
+    watermarkConfig: {
+      type: Object,
+      default: function () {
+        return {
+          showMark: false,
+          text: "pang-table",
+          fontSize: 18,
+          fontColor: "black",
+          fontFamily: "Microsoft Yahei",
+          rotate: 30,
+          allowDelete: false,
+          offsetX: 300,
+          offsetY: 300,
+        };
+      },
+    },
   },
   data() {
     return {
@@ -81,11 +98,19 @@ export default {
     },
   },
   mounted() {
+    this.setWatermark();
     this.tableData = [...this.data];
   },
   methods: {
     isRenderSearch() {
       return this.$slots.form ? this.$slots.form[0] : null;
+    },
+    setWatermark() {
+      if (!this.watermarkConfig.showMark) return;
+      this.$nextTick(() => {
+        const watermark = new WaterMark(".pang-table");
+        watermark.setWaterMark({ ...this.watermarkConfig });
+      });
     },
     // handle
     handleColumnChange(data) {
@@ -102,6 +127,7 @@ export default {
         targetStyles: ["*"],
         style: "@page {margin:0 10mm}",
       });
+      // window.print();
     },
     handleSelectionChange(val) {
       this.tableSelected = [...val];
